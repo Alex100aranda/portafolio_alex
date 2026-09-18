@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import { proyectos } from '../data/proyectos';
+import redworkShot from '../assets/redwork-screenshot.png';
+import redsicShot from '../assets/redsic-screenshot.png';
+import obrasShot from '../assets/obras-screenshot.png';
+import maderasArteShot from '../assets/maderas-arte-screenshot.png';
+
+const imagenes = {
+  redwork: redworkShot,
+  redsic: redsicShot,
+  obras: obrasShot,
+  'maderas-arte': maderasArteShot,
+};
+---
+
+<section id="proyectos" class="mx-auto max-w-5xl px-6 py-14">
+  <div data-reveal class="mb-10 flex items-baseline justify-between">
+    <h2 class="text-2xl font-medium text-[var(--color-text)]">Proyectos</h2>
+    <span class="font-mono text-xs text-[var(--color-muted)]">{proyectos.length} registrados</span>
+  </div>
+
+  <div class="border-t border-[var(--color-line)]">
+    {
+      proyectos.map((p) => (
+        <article data-reveal class="group border-b border-[var(--color-line)] py-8 sm:grid sm:grid-cols-[9rem_1fr] sm:gap-8">
+          <div class="mb-4 sm:mb-0">
+            <div class="flex items-center gap-2">
+              <span
+                class={`h-1.5 w-1.5 rounded-full ${p.estado === 'produccion' ? 'bg-[var(--color-live)]' : 'bg-[var(--color-accent)]'}`}
+              />
+              <span class="font-mono text-xs text-[var(--color-muted)]">
+                {p.estado === 'produccion' ? 'producción' : 'en desarrollo'}
+              </span>
+            </div>
+            <p class="mt-2 font-mono text-xs text-[var(--color-muted)]">{p.periodo}</p>
+          </div>
+
+          <div>
+            <div class="flex items-baseline justify-between gap-4">
+              <h3 class="text-xl font-medium text-[var(--color-text)]">{p.nombre}</h3>
+              {p.url && (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="shrink-0 text-sm text-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  visitar
+                </a>
+              )}
+            </div>
+
+            {p.imagenKey && (
+              <div class="mt-4 overflow-hidden rounded-sm border border-[var(--color-line)]">
+                <Image
+                  src={imagenes[p.imagenKey]}
+                  alt={`Captura de pantalla de ${p.nombre}`}
+                  width={640}
+                  height={334}
+                  class="w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
+            <p class="mt-4 leading-relaxed text-[var(--color-muted)]">{p.resumen}</p>
+
+            <dl class="mt-4 space-y-1.5 text-sm">
+              <div class="flex gap-2">
+                <dt class="shrink-0 text-[var(--color-muted)]">Rol</dt>
+                <dd class="text-[var(--color-text)]">{p.rol}</dd>
+              </div>
+              <div class="flex gap-2">
+                <dt class="shrink-0 text-[var(--color-muted)]">Resultado</dt>
+                <dd class="text-[var(--color-text)]">{p.resultado}</dd>
+              </div>
+            </dl>
+
+            <ul class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
+              {p.stack.map((tech) => (
+                <li class="rounded-sm bg-[var(--color-surface)] px-2 py-1 text-[var(--color-muted)]">{tech}</li>
+              ))}
+            </ul>
+
+            {p.extra && (
+              <div class="mt-5 rounded-sm border border-[var(--color-line)] bg-[var(--color-surface)]/50 p-4">
+                <p class="font-mono text-xs text-[var(--color-muted)]">extensión · {p.extra.nombre}</p>
+                <div class="mt-3 overflow-hidden rounded-sm border border-[var(--color-line)]">
+                  <Image
+                    src={imagenes[p.extra.imagenKey]}
+                    alt={`Captura de pantalla de ${p.extra.nombre}`}
+                    width={640}
+                    height={334}
+                    class="w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <p class="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">{p.extra.descripcion}</p>
+                {p.extra.url && (
+                  <a
+                    href={p.extra.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-2 inline-block text-sm text-[var(--color-accent)]"
+                  >
+                    ver módulo
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

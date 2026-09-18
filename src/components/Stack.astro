@@ -1,0 +1,102 @@
+---
+const grupos = [
+  {
+    area: 'Backend',
+    color: 'var(--color-accent)',
+    icon: 'server',
+    items: ['PHP', 'MySQL', 'NestJS', 'TypeORM', 'Laravel', 'C#'],
+  },
+  {
+    area: 'Frontend',
+    color: 'var(--color-live)',
+    icon: 'code',
+    items: ['Astro', 'Vue', 'JavaScript', 'TypeScript', 'Tailwind CSS'],
+  },
+  {
+    area: 'Móvil',
+    color: 'var(--color-violet)',
+    icon: 'smartphone',
+    items: ['.NET MAUI', 'Capacitor', 'Ionic'],
+  },
+  {
+    area: 'Infraestructura',
+    color: 'var(--color-amber)',
+    icon: 'cloud',
+    items: ['SSH / SFTP', 'Vercel', 'Hostinger', 'Git'],
+  },
+];
+
+const icons: Record<string, string> = {
+  server:
+    '<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r=".6" fill="currentColor" stroke="none"/><circle cx="7" cy="17" r=".6" fill="currentColor" stroke="none"/>',
+  code:
+    '<path d="M8 6L3 12l5 6"/><path d="M16 6l5 6-5 6"/>',
+  smartphone:
+    '<rect x="6" y="2.5" width="12" height="19" rx="2.2"/><line x1="6" y1="18" x2="18" y2="18"/>',
+  cloud:
+    '<path d="M6.5 18a4.5 4.5 0 0 1-.4-8.98A5.5 5.5 0 0 1 16.9 7.1 4.25 4.25 0 0 1 17 15.5H7c-.17 0-.34 0-.5-.02"/>',
+};
+---
+
+<section id="stack" class="mx-auto max-w-5xl px-6 py-14">
+  <h2 data-reveal class="mb-10 text-2xl font-medium text-[var(--color-text)]">Stack</h2>
+
+  <div class="grid gap-8 sm:grid-cols-2">
+    {
+      grupos.map((grupo) => (
+        <div data-reveal class="stack-group" style={`--group-color: ${grupo.color}`}>
+          <div class="mb-3 flex items-center gap-2">
+            <svg
+              class="stack-group__icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={icons[grupo.icon]}
+            />
+            <h3 class="font-mono text-xs text-[var(--color-muted)]">{grupo.area}</h3>
+          </div>
+          <ul class="flex flex-wrap gap-2">
+            {grupo.items.map((item) => (
+              <li class="stack-pill rounded-sm border border-[var(--color-line)] px-2.5 py-1 font-mono text-xs text-[var(--color-text)]">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .stack-group__icon {
+    color: var(--group-color);
+    transition: filter 0.3s ease;
+  }
+
+  .stack-pill {
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .stack-pill:hover {
+    border-color: var(--group-color);
+    background-color: color-mix(in srgb, var(--group-color) 14%, transparent);
+    color: var(--group-color);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack-pill:hover {
+      transform: none;
+    }
+  }
+</style>

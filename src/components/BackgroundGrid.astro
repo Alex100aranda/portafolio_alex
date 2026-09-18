@@ -1,0 +1,31 @@
+<div
+  aria-hidden="true"
+  class="pointer-events-none fixed inset-0 -z-10 bg-[var(--color-base)]"
+>
+  <div class="absolute inset-0 grid-bg"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 50% 0%, transparent 0%, var(--color-base) 75%);"></div>
+</div>
+
+<style>
+  .grid-bg {
+    background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.5;
+    animation: drift 60s linear infinite;
+  }
+
+  @keyframes drift {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 280px 280px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-bg {
+      animation: none;
+    }
+  }
+</style>

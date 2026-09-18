@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import BackgroundGrid from '../components/BackgroundGrid.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Alex Aranda — Desarrollador de software',
+  description = 'Desarrollador de software freelance en México. Construyo marketplaces, sistemas administrativos y apps móviles de extremo a extremo.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <BackgroundGrid />
+    <slot />
+
+    <script>
+      const items = document.querySelectorAll('[data-reveal]');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      items.forEach((item, i) => {
+        (item as HTMLElement).style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+        observer.observe(item);
+      });
+    </script>
+  </body>
+</html>
