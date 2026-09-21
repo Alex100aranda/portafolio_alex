@@ -44,7 +44,7 @@ const imagenes = {
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="shrink-0 text-sm text-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100"
+                  class="visitar-link shrink-0 text-sm text-[var(--color-accent)]"
                 >
                   visitar
                 </a>
@@ -115,3 +115,25 @@ const imagenes = {
     }
   </div>
 </section>
+
+<style>
+  /* Por defecto (móvil / touch) el link "visitar" queda siempre visible:
+     group-hover nunca se dispara sin un mouse real, así que ocultarlo
+     por opacidad lo dejaba invisible e inalcanzable en pantallas táctiles. */
+  .visitar-link {
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Solo en dispositivos con mouse real ocultamos y revelamos al hacer hover */
+  @media (hover: hover) and (pointer: fine) {
+    .visitar-link {
+      opacity: 0;
+    }
+
+    .group:hover .visitar-link,
+    .group:focus-within .visitar-link {
+      opacity: 1;
+    }
+  }
+</style>
